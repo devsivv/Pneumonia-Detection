@@ -7,6 +7,8 @@ import os
 from tensorflow.keras.preprocessing import image
 from PIL import Image
 
+from gradcam import generate_gradcam
+
 # ==================================================
 # Page Configuration
 # ==================================================
@@ -15,6 +17,7 @@ st.set_page_config(
     page_title="Pneumonia Detection",
     layout="centered"
 )
+
 # ==================================================
 # Load Model
 # ==================================================
@@ -68,11 +71,15 @@ with st.sidebar:
 # Header
 # ==================================================
 
-st.title("Pneumonia Detection")
+st.title("🩺 Pneumonia Detection")
 
 st.markdown(
-    "Chest X-ray classification using Deep Learning and Transfer Learning (VGG16)."
+    """
+    Chest X-ray classification using Deep Learning,
+    Transfer Learning (VGG16), and Grad-CAM Explainable AI.
+    """
 )
+
 st.divider()
 
 # ==================================================
@@ -94,41 +101,57 @@ with col2:
         """
         **Supported Formats**
 
-        • JPG  
-        • JPEG  
+        • JPG
+        • JPEG
         • PNG
         """
     )
 
 # ==================================================
-# Prediction
+# Prediction + Grad-CAM
 # ==================================================
 
 if uploaded_file is not None:
 
     img = Image.open(uploaded_file).convert("RGB")
 
-    # Display image centered
+    temp_path = "temp_xray.jpg"
+
+    img.save(temp_path)
+
+    # ----------------------------------------------
+    # Display Uploaded Image
+    # ----------------------------------------------
+
     col1, col2, col3 = st.columns([1, 3, 1])
 
     with col2:
+
         st.image(
             img,
             caption="Uploaded Chest X-ray",
             width=400
         )
 
+    # ----------------------------------------------
     # Preprocessing
+    # ----------------------------------------------
+
     resized_img = img.resize((224, 224))
 
-    img_array = image.img_to_array(resized_img)
+    img_array = image.img_to_array(
+        resized_img
+    )
 
     img_array = np.expand_dims(
         img_array,
         axis=0
     )
 
+    # ----------------------------------------------
     # Prediction
+    # ----------------------------------------------
+
     prediction = model.predict(
         img_array,
         verbose=0
@@ -153,12 +176,14 @@ if uploaded_file is not None:
     col1, col2 = st.columns(2)
 
     with col1:
+
         st.metric(
             label="Predicted Class",
             value=label
         )
 
     with col2:
+
         st.metric(
             label="Confidence",
             value=f"{confidence*100:.2f}%"
@@ -178,22 +203,59 @@ if uploaded_file is not None:
             "Pneumonia detected."
         )
 
+    # ----------------------------------------------
+    # Grad-CAM
+    # ----------------------------------------------
+
+    st.divider()
+
+    st.subheader("🔬 Grad-CAM Explainability")
+
+    with st.spinner("Generating heatmap..."):
+
+        gradcam_image = generate_gradcam(
+            model,
+            temp_path
+        )
+
+    st.image(
+        gradcam_image,
+        caption="Model Attention Heatmap",
+        use_container_width=True
+    )
+
+    st.info(
+        """
+        Red and yellow regions indicate areas that
+        contributed most to the model's prediction.
+
+        Grad-CAM helps visualize where the model is
+        focusing when making its decision.
+        """
+    )
+
+    # ----------------------------------------------
+    # Cleanup
+    # ----------------------------------------------
+
+    if os.path.exists(temp_path):
+
+        os.remove(temp_path)
+
 # ==================================================
 # Footer
 # ==================================================
 
 st.divider()
 
-st.divider()
-
 st.caption(
-    "Developed using TensorFlow, Keras and Streamlit"
+    "Developed using TensorFlow, Keras, Streamlit and Grad-CAM Explainable AI"
 )
 
 st.markdown(
     """
-    **Developer:** Shivam Dubey  
-    **GitHub:** [github.com/devsivv](https://github.com/devsivv)
-    """
-)
+    **Developer:** Shivam Dubey
 
+    **GitHub:** https://github.com/devsivv
+    """
+) 

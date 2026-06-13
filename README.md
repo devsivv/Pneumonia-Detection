@@ -62,7 +62,11 @@ The project covers the complete machine learning lifecycle:
 * Model Evaluation using Confusion Matrix and Classification Report
 * Real-Time Inference on Chest X-ray Images
 * Interactive Streamlit Web Application
+* Grad-CAM Explainable AI Visualization
+* Confidence Score Prediction
+* Hugging Face Model Hosting
 * Clean and Modular Project Structure
+
 
 ---
 
@@ -142,7 +146,9 @@ The dataset contains pediatric chest X-ray images categorized by expert radiolog
 7. Model Evaluation
 8. Model Comparison
 9. Inference Pipeline
-10. Streamlit Deployment
+10. Grad-CAM Explainable AI
+11. Streamlit Deployment
+
 
 ---
 
@@ -185,6 +191,23 @@ The models were evaluated on the hold-out test dataset.
 * Normal Recall ≈ 63%
 * High sensitivity for pneumonia detection
 * Suitable as a screening support system
+
+---
+
+## ⚙️ Project Architecture & Workflow
+
+1. Data Exploration
+2. Data Preprocessing
+3. Data Augmentation
+4. Custom CNN Training
+5. VGG16 Transfer Learning
+6. ResNet50 Transfer Learning
+7. Model Evaluation
+8. Model Comparison
+9. Inference Pipeline
+10. Grad-CAM Explainable AI
+11. Streamlit Deployment
+
 
 ---
 
@@ -240,6 +263,9 @@ The Streamlit application enables users to:
 * Perform Real-Time Inference
 * View Model Confidence Scores
 * Obtain Instant Pneumonia Detection Results
+* View Prediction Confidence Scores
+* Visualize Grad-CAM Explainability Heatmaps
+
 
 ---
 
@@ -257,6 +283,47 @@ The Streamlit application enables users to:
 
 ![Pneumonia Prediction](reports/screenshots/03_pneumonia_prediction.png)
 
+### Grad-CAM Explainability
+
+To improve transparency and interpretability, the application generates Grad-CAM (Gradient-weighted Class Activation Mapping) visualizations showing which regions of the chest X-ray contributed most to the model's prediction.
+
+Red and yellow regions indicate stronger influence on the final classification, helping users understand where the model is focusing during inference.
+
+![Grad-CAM Prediction](reports\screenshots\05_gradcam_predictio.png)
+ 
+### Model Evaluation
+
+![Model Evaluation](reports/screenshots/04_model_evaluation.png) 
+
+---
+
+## 🔬 Explainable AI with Grad-CAM
+Grad-CAM (Gradient-weighted Class Activation Mapping) is used to visualize the regions of a chest X-ray that contributed most to the model's prediction.
+
+The heatmaps below highlight areas that received the highest attention from the VGG16 model during inference. Red and yellow regions indicate stronger influence on the final prediction.
+
+#### Normal X-ray Grad-CAM
+
+![Grad-CAM Normal](reports/gradcam_examples/gradcam_normal_1.jpg)
+
+#### Pneumonia X-ray Grad-CAM
+
+
+
+![Grad-CAM Pneumonia](reports/gradcam_examples/gradcam_pneumonia_1.jpg)
+
+---
+
+### Grad-CAM Interpretation
+
+---
+
+Grad-CAM improves model transparency by highlighting image regions that influenced the prediction.
+
+These visualizations help verify whether the model is focusing on clinically relevant thoracic regions rather than unrelated image artifacts.
+
+While Grad-CAM provides insight into model attention, it does not guarantee clinical correctness and should be interpreted as an explanation of model behavior rather than a definitive localization of disease.
+
 ---
 
 ## 📁 Project Structure
@@ -266,10 +333,19 @@ Pneumonia-Detection/
 │
 ├── data/
 │   ├── train/
+│   │   ├── NORMAL/
+│   │   └── PNEUMONIA/
+│   │
 │   ├── val/
+│   │   ├── NORMAL/
+│   │   └── PNEUMONIA/
+│   │
 │   └── test/
+│       ├── NORMAL/
+│       └── PNEUMONIA/
 │
 ├── models/
+│   ├── .cache/
 │   ├── custom_cnn.keras
 │   ├── resnet50_finetuned.keras
 │   └── vgg16_pneumonia.keras
@@ -281,16 +357,32 @@ Pneumonia-Detection/
 │   ├── 04_vgg16.ipynb
 │   ├── 05_resnet50.ipynb
 │   ├── 06_model_comparison.ipynb
-│   └── 07_inference_pipeline.ipynb
+│   ├── 07_inference_pipeline.ipynb
+│   ├── 08_gradcam_explainability.ipynb
+│   └── 09_gradcam_v2.ipynb
 │
 ├── reports/
-│   └── screenshots/
+│   ├── screenshots/
+│   │   ├── 01_home_page.png
+│   │   ├── 02_normal_prediction.png
+│   │   ├── 03_pneumonia_prediction.png
+│   │   └── 04_model_evaluation.png
+│   │   └── 05_gradcam_prediction.png
+│   │
+│   └── gradcam_examples/
+│       ├── gradcam_normal_1.jpg
+│       ├── gradcam_normal_2.jpg
+│       ├── gradcam_pneumonia_1.jpg
+│       └── gradcam_pneumonia_2.jpg
 │
 ├── streamlit_app/
 │   └── app.py
 │
-├── requirements.txt
+├── .gitignore
+├── .python-version
+├── .runtime.txt
 ├── README.md
+├── requirements.txt
 └── main.py
 ```
 
@@ -313,8 +405,18 @@ As a result:
 * Additional data collection
 * Hyperparameter optimization
 * Model ensembling
-* Explainable AI (Grad-CAM)
 * Cloud deployment
+
+---
+
+### Explainability Notes
+
+Grad-CAM provides a visual explanation of model attention but does not guarantee clinical correctness.
+
+Highlighted regions indicate areas that influenced the model's prediction rather than the exact location of disease.
+
+The system should be considered a decision-support tool and not a substitute for expert radiological interpretation.
+
 
 ---
 
