@@ -1,5 +1,6 @@
-import streamlit as st
+from huggingface_hub import hf_hub_download
 import tensorflow as tf
+import streamlit as st
 import numpy as np
 import os
 
@@ -21,14 +22,14 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
 
-    model_path = os.path.join(
-        os.path.dirname(__file__),
-        "..",
-        "models",
-        "vgg16_pneumonia.keras"
+    model_path = hf_hub_download(
+        repo_id="devsivvHF/pneumonia-detection-models",
+        filename="vgg16_pneumonia.keras"
     )
 
-    return tf.keras.models.load_model(model_path)
+    model = tf.keras.models.load_model(model_path)
+
+    return model
 
 
 model = load_model()
