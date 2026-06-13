@@ -318,9 +318,17 @@ As a result:
 
 ---
 
-## 🔗 Repository
+## 🔗 Live Demo
 
-GitHub Repository:
+Streamlit Application:
+https://chest-xray-pneumonia-detector.streamlit.app/
+
+## 🔗 Model Repository
+
+Hugging Face:
+https://huggingface.co/devsivvHF/pneumonia-detection-models
+
+## 🔗 GitHub Repository
 
 https://github.com/devsivv/Pneumonia-Detection
 
