@@ -290,10 +290,6 @@ To improve transparency and interpretability, the application generates Grad-CAM
 Red and yellow regions indicate stronger influence on the final classification, helping users understand where the model is focusing during inference.
 
 ![Grad-CAM Prediction](reports\screenshots\05_gradcam_predictio.png)
- 
-### Model Evaluation
-
-![Model Evaluation](reports/screenshots/04_model_evaluation.png) 
 
 ---
 
