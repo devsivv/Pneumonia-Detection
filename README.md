@@ -4,6 +4,12 @@
   <strong>An automated deep learning image classification system for detecting pneumonia from chest X-ray radiographs, deployed as a Streamlit web application.</strong>
 </p>
 
+## 🔗 Live Demo
+
+Streamlit Application:
+https://chest-xray-pneumonia-detector.streamlit.app/
+
+
 ---
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
@@ -12,11 +18,6 @@
 ![Deep Learning](https://img.shields.io/badge/Deep%20Learning-Computer%20Vision-green)
 
 ---
-
-## 🔗 Live Demo
-
-Streamlit Application:
-https://chest-xray-pneumonia-detector.streamlit.app/
 
 
 ## 📑 Table of Contents
