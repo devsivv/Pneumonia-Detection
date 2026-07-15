@@ -13,6 +13,12 @@
 
 ---
 
+## 🔗 Live Demo
+
+Streamlit Application:
+https://chest-xray-pneumonia-detector.streamlit.app/
+
+
 ## 📑 Table of Contents
 
 * [Project Overview](#-project-overview)
@@ -415,11 +421,6 @@ The system should be considered a decision-support tool and not a substitute for
 
 
 ---
-
-## 🔗 Live Demo
-
-Streamlit Application:
-https://chest-xray-pneumonia-detector.streamlit.app/
 
 ## 🔗 Model Repository
 
